@@ -1,8 +1,8 @@
-import view.main.MainView;
+import view.main.Main;
 
 public class UsedCarSystemStarter {
     public static void main(String[] args) {
-        MainView view = new MainView();
+        Main view = new Main();
         view.launchMainView();
     }
 }

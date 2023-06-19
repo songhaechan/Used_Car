@@ -1,19 +1,41 @@
 package service;
 
-import dao.UserDao;
-import dto.request.UserRequestDto;
+import dao.user.UserDaoImpl;
+import dto.request.UserLoginDto;
+import dto.request.UserRegisterDto;
 import entity.User;
-import mapper.UserMapper;
+
+import java.util.NoSuchElementException;
+
 
 public class UserService {
     //DB 접근 객체
-    UserDao userDao = UserDao.userDaoGetInstance();
-    //Dto - > Entity | Entity - > Dto
-    UserMapper userMapper = new UserMapper();
+    UserDaoImpl userDao = UserDaoImpl.getInstance();
 
-    //회원등록 TODO 05.26 Boolean 을 반환할지 User 를 반환할지 고민
-    public Long userRegister(UserRequestDto userDto) {
-        User user = userMapper.userDtoToEntity(userDto);
-        return userDao.addUser(user);
+    //회원 가입
+    public String userRegister(UserRegisterDto userDto) {
+        User user = User.of(userDto);
+        return userDao.addUser(user)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    //중복 ID 검증
+    public String validateDuplicateUserId(String userId){
+        return userDao.findByUserId(userId).orElseThrow(
+                ()-> new NoSuchElementException("중복된 아이디 입니다.")
+        );
+    }
+
+    //회원 로그인
+    public String userLogin(String loginId, String loginPassword){
+        return userDao.findByUserIdAndPassword(loginId,loginPassword)
+                .orElseThrow(()-> new NoSuchElementException("아이디와 비밀번호를 확인해주세요."));
+    }
+
+    //회원 탈퇴
+    public String deleteAccount(String loginId, String loginPassword){
+        return userDao.deleteUser(loginId,loginPassword).orElseThrow(
+                ()->new NoSuchElementException("아이디와 비밀번호를 확인해주세요")
+        );
     }
 }

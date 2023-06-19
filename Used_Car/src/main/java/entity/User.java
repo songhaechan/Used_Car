@@ -1,8 +1,11 @@
 package entity;
 
+import dto.request.UserRegisterDto;
+
 import java.time.LocalDateTime;
 
 public class User {
+    public User(){}
     //DB 기본키
     private Long userPrimaryKey;
     //회원 아이디
@@ -20,6 +23,9 @@ public class User {
     //가입 시기
     private LocalDateTime userRegistrationDate;
 
+    public static Builder builder(){
+        return new Builder();
+    }
     //빌더패턴
     public static class Builder{
         private String userId;
@@ -80,6 +86,20 @@ public class User {
 
     public LocalDateTime getUserRegistration() {
         return userRegistrationDate;
+    }
+
+    // Dto To Entity
+    public static User of(UserRegisterDto dto){
+        LocalDateTime date = LocalDateTime.now();
+        return User.builder()
+                .userId(dto.getUserId())
+                .userPassword(dto.getUserPassword())
+                .userName(dto.getUserName())
+                .userAddress(dto.getUserAddress())
+                .userBalance(10000000)
+                .userBirth(dto.getUserBirth())
+                .userRegistrationDate(date)
+                .build();
     }
 
     @Override

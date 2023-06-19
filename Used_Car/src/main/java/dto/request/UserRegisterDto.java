@@ -1,6 +1,6 @@
 package dto.request;
 
-public class UserRequestDto {
+public class UserRegisterDto {
     //회원 아이디
     private final String userId;
     //회원 비밀번호
@@ -13,22 +13,44 @@ public class UserRequestDto {
     private final String userBirth;
 
     //빌더패턴
-    public static class Builder{
+    public static class Builder {
         private String userId;
         private String userPassword;
         private String userName;
         private String userAddress;
         private String userBirth;
-        public Builder userId(String userId){this.userId = userId; return this;}
-        public Builder userPassword(String userPassword){this.userPassword = userPassword; return this;}
-        public Builder userName(String userName){this.userName=userName; return this;}
-        public Builder userAddress(String userAddress){this.userAddress=userAddress; return this;}
-        public Builder userBirth(String userBirth){this.userBirth=userBirth; return this;}
-        public UserRequestDto build(){
-            return new UserRequestDto(this);
+
+        public Builder userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder userPassword(String userPassword) {
+            this.userPassword = userPassword;
+            return this;
+        }
+
+        public Builder userName(String userName) {
+            this.userName = userName;
+            return this;
+        }
+
+        public Builder userAddress(String userAddress) {
+            this.userAddress = userAddress;
+            return this;
+        }
+
+        public Builder userBirth(String userBirth) {
+            this.userBirth = userBirth;
+            return this;
+        }
+
+        public UserRegisterDto build() {
+            return new UserRegisterDto(this);
         }
     }
-    private UserRequestDto(Builder builder){
+
+    private UserRegisterDto(Builder builder) {
         this.userId = builder.userId;
         this.userPassword = builder.userPassword;
         this.userName = builder.userName;
